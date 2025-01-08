@@ -4,7 +4,6 @@ Release: 1%{?dist}
 Summary: MetaMover Application
 License: MIT
 URL: https://github.com/blakelton/MetaMover
-Source0: %{name}-%{version}.tar.gz
 
 %description
 MetaMover application.
@@ -20,7 +19,7 @@ mkdir -p %{buildroot}/usr/local/bin
 cp -a %{_myworkspace}/%{_mybuilddir}/MetaMover %{buildroot}/usr/local/bin/
 
 %files
-/usr/local/bin/*
+/usr/local/bin/MetaMover
 
 %changelog
 * Wed Jan 08 2025 Blake Azuela <blake@azuela.info> - 1.0.0-1
