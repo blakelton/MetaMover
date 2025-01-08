@@ -15,37 +15,39 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Con
 set(TS_FILES MetaMover_en_US.ts)
 
 set(PROJECT_SOURCES
-        main.cpp
-        metamovermainwindow.cpp
-        metamovermainwindow.h
-        metamovermainwindow.ui
-        exif.cpp    # Added exif source file
-        exif.h      # Added exif header file
-        ${TS_FILES}
+    main.cpp
+    metamovermainwindow.cpp
+    metamovermainwindow.h
+    metamovermainwindow.ui
+    exif.cpp
+    exif.h
+    appconfig.h
+    appconfigmanager.h 
+    appconfigmanager.cpp
+    basicfilehandler.h 
+    basicfilehandler.cpp
+    photofilehandler.h 
+    photofilehandler.cpp
+    scanner.h 
+    scanner.cpp
+    videofilehandler.h 
+    videofilehandler.cpp
+    ifilehandler.h
+    filehandlerfactory.h
+    transfermanager.h 
+    transfermanager.cpp
+    directorytransfer.h 
+    directorytransfer.cpp
+    resources.qrc
+    appicon.rc
+    ${TS_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(MetaMover
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        appconfig.h
-        appconfigmanager.h appconfigmanager.cpp
-        resources.qrc
-        basicfilehandler.h basicfilehandler.cpp
-        photofilehandler.h photofilehandler.cpp
-        scanner.h scanner.cpp
-        videofilehandler.h videofilehandler.cpp
-        ifilehandler.h
-        filehandlerfactory.h
-        transfermanager.h transfermanager.cpp
-        directorytransfer.h directorytransfer.cpp
-        appicon.rc
     )
-
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET MetaMover APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
@@ -53,8 +55,6 @@ else()
         add_library(MetaMover SHARED
             ${PROJECT_SOURCES}
         )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(MetaMover
             ${PROJECT_SOURCES}
@@ -67,12 +67,10 @@ endif()
 
 target_link_libraries(MetaMover PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Concurrent)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
   set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.MetaMover)
 endif()
+
 set_target_properties(MetaMover PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}

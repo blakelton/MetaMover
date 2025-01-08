@@ -1,0 +1,35 @@
+FROM fffaraz/qt:mxe
+
+# Install Python and necessary dependencies
+RUN apt-get update && apt-get install -y python3 python3-pip
+RUN pip3 install packaging
+
+RUN \
+    cd /opt/mxe && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6 && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-conf && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtcharts && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtdeclarative && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qthttpserver && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtimageformats && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtmultimedia && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtscxml && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtserialport && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtservice && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtshadertools && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtsvg && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qttools && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qttranslations && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtwebsockets && \
+    make --jobs=$(nproc) JOBS=$(nproc) MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtbase && \
+    exit 0
+
+ENV PATH="${PATH}:/opt/mxe/usr/x86_64-w64-mingw32.static/qt6/bin"
+
+RUN \
+    set -eux && \
+    echo $PATH && \
+    ln -s /opt/mxe/usr/bin/x86_64-w64-mingw32.static-cmake /usr/local/bin/cmake && \
+    cmake --version && \
+    qmake --version && \
+    exit 0
