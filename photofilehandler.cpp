@@ -13,6 +13,8 @@
 #include <iostream>
 #include <string>
 // #include <cstdio> this includes supports the section below for EXIF output
+#include <algorithm>  // For std::remove_if
+#include <cctype>     // For std::isspace
 #include <sstream>
 #include <fstream>
 #include <iomanip>
@@ -58,7 +60,13 @@ std::chrono::time_point<std::chrono::system_clock> PhotoFileHandler::getFileCrea
 
 std::string PhotoFileHandler::removeWhitespace(const std::string& input) {
     std::string result = input;
-    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    result.erase(
+        std::remove_if(
+            result.begin(), result.end(),
+            [](unsigned char ch) { return std::isspace(ch); }
+        ),
+        result.end()
+    );
     return result;
 }
 
