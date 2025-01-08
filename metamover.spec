@@ -23,5 +23,5 @@ cp -r package-rpm/usr/local/bin/* %{buildroot}/usr/local/bin/
 /usr/local/bin/*
 
 %changelog
-* $(date '+%a %b %d %Y') Blake Azuela <blake@azuela.info> - 1.0.0-1
+* Blake Azuela <blake@azuela.info> - 1.0.0-1
 - Initial release.
