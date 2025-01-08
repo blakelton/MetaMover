@@ -13,8 +13,6 @@ MetaMover is a tool that addresses the common issue of cluttered photo directori
 
 To get started with MetaMover, follow these steps:
 
-** INSTALLER ON THE WAY! **
-
 1. **Download and Extract:**
    - Download the MetaMover zip file from the GitHub repository.
    - Extract the zip file to your preferred location.
